@@ -1,0 +1,37 @@
+package com.sample
+ 
+import com.sample.DroolsTest.UiHandler;
+import java.util.*; 
+
+declare Answer
+question: String
+answer: String
+end
+ 
+rule "Initialize"
+    when
+    then
+		UiHandler.showDialog("Witaj!");
+		String answers[] = {"recent past", "distant past"};
+		String message = UiHandler.showQuestionAndGetAnswer("how long ago?", answers);
+		insert(new Answer("how long ago?", message));
+		System.out.println(message);
+end
+
+rule "Recent Past"
+	when a : Answer(question.equals("how long ago?"), answer.equals("recent past"))
+	then
+		String answers[] = {"yes", "no"};
+		String message = UiHandler.showQuestionAndGetAnswer("like the Cold War?", answers);
+		insert(new Answer("like the Cold War?", message));
+		System.out.println(message);
+end
+
+rule "Distant Past"
+	when a : Answer(question.equals("how long ago?"), answer.equals("distant past"))
+	then
+		String answers[] = {"fantasy", "historical accuracy", "science fiction?"};
+		String message = UiHandler.showQuestionAndGetAnswer("fantasy or historical accuracy?", answers);
+		insert(new Answer("fantasy or historical accuracy?", message));
+		System.out.println(message);
+end
